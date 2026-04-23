@@ -1,6 +1,6 @@
-﻿using BuhtaLink.Resources.Views;
-using BuhtaLink.Services;
+﻿using BuhtaLink.Services;
 using BuhtaLink.ViewModels;
+using BuhtaLink.Resources.Views;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 
@@ -11,7 +11,7 @@ public static class MauiProgram
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
-        builder            
+        builder
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
             .ConfigureFonts(fonts =>
@@ -20,14 +20,28 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-        // Регистрация сервисов
-        builder.Services.AddSingleton<IRestApiService, MockRestApiService>();
+        // HttpClient для API
+        #if ANDROID
+                var baseUrl = "http://10.0.2.2:5082"; 
+        #elif WINDOWS
+                var baseUrl = "http://localhost:5082"; 
+        #else
+                var baseUrl = "http://localhost:5082"; 
+        #endif
 
-        // Регистрация ViewModel
+        builder.Services.AddHttpClient<IRestApiService, RestApiService>(client =>
+        {
+            client.BaseAddress = new Uri(baseUrl);
+        });
+
+        // ViewModel
         builder.Services.AddTransient<ProfileViewModel>();
-
-        // Регистрация страниц
+        builder.Services.AddTransient<LoginViewModel>(); 
+        builder.Services.AddTransient<RegisterViewModel>();
+        // Страницы
         builder.Services.AddTransient<ProfilePage>();
+        builder.Services.AddTransient<LoginPage>();
+        builder.Services.AddTransient<RegisterPage>();
 
 #if DEBUG
         builder.Logging.AddDebug();

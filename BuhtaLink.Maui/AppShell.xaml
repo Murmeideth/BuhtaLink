@@ -4,15 +4,24 @@
        xmlns:views="clr-namespace:BuhtaLink.Resources.Views"
        x:Class="BuhtaLink.AppShell">
 
-    <TabBar>
+    <!-- Страница логина (первая при запуске) -->
+    <ShellContent Route="login"
+                  ContentTemplate="{DataTemplate views:LoginPage}" />
+
+    <!-- Страница регистрации -->
+    <ShellContent Route="register"
+                  ContentTemplate="{DataTemplate views:RegisterPage}" />
+
+    <!-- Основные вкладки -->
+    <TabBar Route="main">
         <Tab Title="Новости" Icon="news_icon.png">
-            <ShellContent ContentTemplate="{DataTemplate views:MainPage}" />
+            <ShellContent Route="news" ContentTemplate="{DataTemplate views:MainPage}" />
         </Tab>
         <Tab Title="Сообщения" Icon="msg_icon.png">
-            <ShellContent ContentTemplate="{DataTemplate views:MainPage}" />
+            <ShellContent Route="messages" ContentTemplate="{DataTemplate views:MainPage}" />
         </Tab>
         <Tab Title="Профиль" Icon="profile_icon.png">
-            <ShellContent ContentTemplate="{DataTemplate views:ProfilePage}" />
+            <ShellContent Route="profile" ContentTemplate="{DataTemplate views:ProfilePage}" />
         </Tab>
     </TabBar>
 </Shell>

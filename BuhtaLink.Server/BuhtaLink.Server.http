@@ -1,0 +1,6 @@
+@BuhtaLink.Server_HostAddress = http://localhost:5082
+
+GET {{BuhtaLink.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

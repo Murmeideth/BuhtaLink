@@ -1,6 +1,9 @@
 <Solution>
   <Folder Name="/BuhtaLink.Maui/">
-    <Project Path="BuhtaLink.Maui/BuhtaLink.csproj" />
+    <Project Path="BuhtaLink.Maui/BuhtaLink.csproj">
+      <Deploy Solution="Debug|*" />
+    </Project>
   </Folder>
-  <Project Path="BuhtaLink.Api/BuhtaLink.Api.csproj" />
+  <Project Path="BuhtaLink.Server/BuhtaLink.Server.csproj" />
+  <Project Path="BuhtaLink.Shared/BuhtaLink.Shared.csproj" />
 </Solution>

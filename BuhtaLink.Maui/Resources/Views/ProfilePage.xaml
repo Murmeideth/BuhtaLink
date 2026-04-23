@@ -7,7 +7,7 @@
              >
 
     <Grid Background="#060330">
-        <ScrollView VerticalOptions="FillAndExpand">
+        <RefreshView VerticalOptions="FillAndExpand">
             <VerticalStackLayout Spacing="15">
 
                 <!-- Информационная панель -->
@@ -147,6 +147,6 @@
                     </CollectionView>
                 </VerticalStackLayout>
             </VerticalStackLayout>
-        </ScrollView>
+        </RefreshView>
     </Grid>
 </ContentPage>

@@ -12,7 +12,6 @@ public class RestApiService : IRestApiService
     public RestApiService(HttpClient httpClient)
     {
         _httpClient = httpClient;
-        // _httpClient.BaseAddress уже установлен в MauiProgram.cs через AddHttpClient
         _httpClient.Timeout = TimeSpan.FromSeconds(30);
         _jsonOptions = new JsonSerializerOptions
         {
@@ -20,7 +19,6 @@ public class RestApiService : IRestApiService
         };
     }
 
-    // Установка JWT токена после логина
     public void SetAuthToken(string token)
     {
         _httpClient.DefaultRequestHeaders.Authorization =
@@ -55,6 +53,12 @@ public class RestApiService : IRestApiService
                 var result = await response.Content.ReadFromJsonAsync<LoginResponse>(_jsonOptions);
                 SetAuthToken(result.Token);
                 await SecureStorage.SetAsync("jwt_token", result.Token);
+
+                await SecureStorage.SetAsync("user_id", result.User.Id.ToString());
+                await SecureStorage.SetAsync("user_nickname", result.User.Nickname ?? result.User.Username);
+                await SecureStorage.SetAsync("user_fullname", result.User.FullName ?? "");
+                await SecureStorage.SetAsync("user_avatar", result.User.AvatarUrl ?? "personalplaceholder.jpg");
+
                 return true;
             }
             return false;
@@ -77,6 +81,12 @@ public class RestApiService : IRestApiService
                 var result = await response.Content.ReadFromJsonAsync<LoginResponse>(_jsonOptions);
                 SetAuthToken(result.Token);
                 await SecureStorage.SetAsync("jwt_token", result.Token);
+
+                await SecureStorage.SetAsync("user_id", result.User.Id.ToString());
+                await SecureStorage.SetAsync("user_nickname", result.User.Nickname ?? result.User.Username);
+                await SecureStorage.SetAsync("user_fullname", result.User.FullName ?? "");
+                await SecureStorage.SetAsync("user_avatar", result.User.AvatarUrl ?? "personalplaceholder.jpg");
+
                 return true;
             }
             return false;
@@ -86,6 +96,23 @@ public class RestApiService : IRestApiService
             return false;
         }
     }
+
+    // ===== ТРИ НОВЫХ МЕТОДА =====
+    public async Task<UserProfileDto> GetProfileAsync()
+    {
+        return await GetAsync<UserProfileDto>("/api/Profile");
+    }
+
+    public async Task<List<FriendDto>> GetFriendsAsync()
+    {
+        return await GetAsync<List<FriendDto>>("/api/Profile/friends");
+    }
+
+    public async Task<List<PostDto>> GetUserPostsAsync(int skip = 0, int take = 20)
+    {
+        return await GetAsync<List<PostDto>>($"/api/Profile/posts?skip={skip}&take={take}");
+    }
+    // =============================
 
     private class LoginResponse
     {

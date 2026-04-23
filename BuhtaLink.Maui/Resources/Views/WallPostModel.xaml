@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BuhtaLink.Resources.Views.WallPostModel"
+             x:Name="root">
+
+    <Grid RowDefinitions="Auto, Auto, Auto">
+        <BoxView Grid.Row="0" HeightRequest="1" Color="#7d7f7d" Margin="2.5"/>
+
+        <Grid Grid.Row="1" Margin="7.5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Аватар автора -->
+            <Border Grid.Column="0" 
+                    Stroke="DimGray" 
+                    WidthRequest="64"
+                    HeightRequest="64"
+                    VerticalOptions="Start">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="7.5"/>
+                </Border.StrokeShape>
+                <Image Source="{Binding AvatarSource, Source={x:Reference root}}" 
+                       Aspect="AspectFill"/>
+            </Border>
+
+            <!-- Контент поста -->
+            <VerticalStackLayout Grid.Column="1" 
+                                 Spacing="5" 
+                                 Margin="10,0,0,0">
+                <!-- Имя автора -->
+                <Label Text="{Binding UserName, Source={x:Reference root}}" 
+                       TextColor="Gainsboro" 
+                       FontSize="17"
+                       FontAttributes="Bold"/>
+
+                <!-- Текст поста -->
+                <Label Text="{Binding PostText, Source={x:Reference root}}" 
+                       TextColor="Gainsboro" 
+                       FontSize="12"
+                       HorizontalTextAlignment="Justify"
+                       LineBreakMode="WordWrap"/>
+
+                <!-- Информация о комментариях и дате -->
+                <HorizontalStackLayout Spacing="15" Margin="0,5,0,0">
+                    <Label TextColor="Gainsboro" FontSize="11">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="💬 "/>
+                                <Span Text="{Binding CommentsCount, Source={x:Reference root}}"/>
+                                <Span Text=" комментариев"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label TextColor="Gainsboro" FontSize="11">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="📅 "/>
+                                <Span Text="{Binding PostDate, Source={x:Reference root}}"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </Grid>
+
+        <BoxView Grid.Row="2" HeightRequest="1" Color="#7d7f7d" Margin="2.5"/>
+    </Grid>
+</ContentView>

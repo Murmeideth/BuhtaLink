@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/BuhtaLink.Maui/">
+    <Project Path="BuhtaLink.Maui/BuhtaLink.csproj" />
+  </Folder>
+  <Project Path="BuhtaLink.Api/BuhtaLink.Api.csproj" />
+</Solution>

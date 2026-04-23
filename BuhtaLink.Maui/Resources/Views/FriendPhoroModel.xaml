@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BuhtaLink.Resources.Views.FriendPhoroModel"
+             x:Name="root">
+
+    <Border Stroke="#7d7f7d" Margin="5" Padding="2.5">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="7.5"/>
+        </Border.StrokeShape>
+
+        <VerticalStackLayout HorizontalOptions="Center">
+            <!-- Используем CachedImage -->
+            <Image
+                Source="{Binding FriendAvatar, Source={x:Reference root}}" 
+                HeightRequest="64" 
+                WidthRequest="64"
+                Aspect="AspectFill"/>
+
+            <Label Text="{Binding FriendName, Source={x:Reference root}}" 
+                   HorizontalTextAlignment="Center" 
+                   VerticalTextAlignment="Center"
+                   TextColor="Gainsboro" 
+                   FontSize="14"
+                   MaxLines="1"
+                   LineBreakMode="TailTruncation"/>
+        </VerticalStackLayout>
+
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding FriendTapCommand, Source={x:Reference root}}"
+                                  CommandParameter="{Binding FriendId, Source={x:Reference root}}"/>
+        </Border.GestureRecognizers>
+    </Border>
+</ContentView>

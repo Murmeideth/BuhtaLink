@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BuhtaLink.Resources.Views.MainPage"
+             Shell.NavBarIsVisible="False"
+             xmlns:views="clr-namespace:BuhtaLink.Resources.Views"
+             >
+
+
+    <Grid
+            Background="#060330">
+        <ScrollView
+            VerticalOptions="FillAndExpand"
+            Padding="15"
+            Margin="2.5">
+
+            <VerticalStackLayout 
+                Padding="30,0"
+                Spacing="25">
+                <views:PostModel ImageSource="dotnet_bot.png" 
+                                     TitleText="Часть какого-то глобального текста. Краткое представление новости и еще какие-то штуки и залупки."
+                                     ButtonText="Подробнее"/>
+                <views:PostModel ImageSource="dotnet_bot.png" 
+                     TitleText="Часть какого-то глобального текста. Краткое представление новости и еще какие-то штуки и залупки."
+                     ButtonText="Подробнее"/>
+                <views:PostModel ImageSource="dotnet_bot.png" 
+                     TitleText="Часть какого-то глобального текста. Краткое представление новости и еще какие-то штуки и залупки."
+                     ButtonText="Подробнее"/>
+                <views:PostModel ImageSource="dotnet_bot.png" 
+                     TitleText="Часть какого-то глобального текста. Краткое представление новости и еще какие-то штуки и залупки."
+                     ButtonText="Подробнее"/>
+                <views:PostModel ImageSource="dotnet_bot.png" 
+                     TitleText="Часть какого-то глобального текста. Краткое представление новости и еще какие-то штуки и залупки."
+                     ButtonText="Подробнее"/>
+                <views:PostModel ImageSource="dotnet_bot.png" 
+                     TitleText="Часть какого-то глобального текста. Краткое представление новости и еще какие-то штуки и залупки."
+                     ButtonText="Подробнее"/>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+
+</ContentPage>

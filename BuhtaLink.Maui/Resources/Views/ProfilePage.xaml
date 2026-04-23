@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BuhtaLink.Resources.Views.ProfilePage"
+             Shell.NavBarIsVisible="False"
+             xmlns:views="clr-namespace:BuhtaLink.Resources.Views"
+             >
+
+    <Grid Background="#060330">
+        <ScrollView VerticalOptions="FillAndExpand">
+            <VerticalStackLayout Spacing="15">
+
+                <!-- Информационная панель -->
+                <HorizontalStackLayout 
+                    x:Name="infoPanel" 
+                    Padding="12.5" 
+                    BackgroundColor="#474b4e"
+                    Spacing="10"
+                    HorizontalOptions="Fill">
+
+                    <!-- Аватар -->
+                    <Border Stroke="DimGray" 
+                            HorizontalOptions="Center"
+                            WidthRequest="80"
+                            HeightRequest="80">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="7.5"/>
+                        </Border.StrokeShape>
+                        <Image Source="{Binding UserAvatar}" 
+                               Aspect="AspectFill"/>
+                    </Border>
+
+                    <!-- Информация о пользователе -->
+                    <Border Stroke="DimGray" 
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="Center">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="7.5"/>
+                        </Border.StrokeShape>
+                        <VerticalStackLayout 
+                            HorizontalOptions="Center" 
+                            VerticalOptions="Center" 
+                            Margin="10">
+                            <Label Text="{Binding UserNickname}" 
+                                   HorizontalTextAlignment="Center" 
+                                   TextColor="Gainsboro" 
+                                   FontSize="17"
+                                   FontAttributes="Bold"/>
+                            <Label Text="{Binding UserFullName}" 
+                                   HorizontalTextAlignment="Center" 
+                                   TextColor="Gainsboro" 
+                                   FontSize="14"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </HorizontalStackLayout>
+
+                <!-- Панель друзей -->
+                <VerticalStackLayout 
+                    x:Name="friendPanel" 
+                    BackgroundColor="#474b4e" 
+                    Spacing="10"
+                    Padding="0,10,0,10">
+
+                    <Label Text="Друзья" 
+                           HorizontalTextAlignment="Center" 
+                           TextColor="Gainsboro" 
+                           FontSize="17"
+                           FontAttributes="Bold"/>
+
+                    <BoxView HeightRequest="1" 
+                             Color="#7d7f7d" 
+                             HorizontalOptions="Fill" 
+                             Margin="2.5"/>
+
+                    <!-- Адаптивный список друзей -->
+                    <CollectionView ItemsSource="{Binding Friends}"
+                                    ItemsLayout="HorizontalList"
+                                    HeightRequest="100">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <views:FriendPhoroModel 
+                                    FriendName="{Binding Name}"
+                                    FriendAvatar="{Binding Avatar}"/>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+
+                <!-- Стена -->
+                <VerticalStackLayout 
+                    x:Name="newsPanel" 
+                    BackgroundColor="#474b4e" 
+                    Spacing="10"
+                    Padding="0,10,0,10">
+
+                    <Label Text="Стена" 
+                           HorizontalTextAlignment="Center" 
+                           TextColor="Gainsboro" 
+                           FontSize="17"
+                           FontAttributes="Bold"/>
+
+                    <BoxView HeightRequest="1" 
+                             Color="#7d7f7d" 
+                             HorizontalOptions="Fill" 
+                             Margin="2.5"/>
+
+                    <!-- Поле для создания поста -->
+                    <Border Margin="10" 
+                            Padding="2.5"
+                            Stroke="DimGray">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="7.5"/>
+                        </Border.StrokeShape>
+
+                        <Grid ColumnDefinitions="*, Auto"
+                              RowDefinitions="Auto">
+
+                            <Entry Grid.Column="0"
+                                   MaxLength="300" 
+                                   Placeholder="Напишите что-нибудь..." 
+                                   PlaceholderColor="Grey" 
+                                   TextColor="Gainsboro"
+                                   BackgroundColor="Transparent"
+                                   FontSize="14"/>
+
+                            <Button Grid.Column="1"
+                                    Text="✎" 
+                                    BackgroundColor="#001e47" 
+                                    Opacity=".9"
+                                    WidthRequest="40"
+                                    HeightRequest="40"
+                                    FontSize="18"/>
+                        </Grid>
+                    </Border>
+
+                    <CollectionView ItemsSource="{Binding WallPosts}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <views:WallPostModel 
+                                    UserName="{Binding UserName}"
+                                    PostText="{Binding PostText}"
+                                    CommentsCount="{Binding CommentsCount}"
+                                    PostDate="{Binding PostDate}"
+                                    AvatarSource="{Binding AvatarSource}"/>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

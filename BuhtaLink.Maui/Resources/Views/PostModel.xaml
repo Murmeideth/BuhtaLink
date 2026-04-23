@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BuhtaLink.Resources.Views.PostModel"
+             x:Name="root">
+    <Border Stroke="#7d7f7d" Background="#474b4e">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="7.5"/>
+        </Border.StrokeShape>
+        <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="7.5">
+            <Border Stroke="#00005c" Padding="5">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12.5"/>
+                </Border.StrokeShape>
+                <Image Source="{Binding ImageSource, Source={x:Reference Name=root}}"
+                       MaximumWidthRequest="255" MaximumHeightRequest="175"/>
+            </Border>
+            <Label Text="{Binding TitleText, Source={x:Reference Name=root}}"
+                   MaxLines="2" LineBreakMode="TailTruncation"
+                   Margin="5" HorizontalTextAlignment="Center" TextColor="Gainsboro"/>
+            <Button Text="{Binding ButtonText, Source={x:Reference Name=root}}"
+                    Command="{Binding ButtonCommand, Source={x:Reference Name=root}}"
+                    Opacity=".7" TextColor="Gainsboro" BackgroundColor="#00005c"/>
+        </StackLayout>
+    </Border>
+</ContentView>

@@ -7,7 +7,9 @@
              >
 
     <Grid Background="#060330">
-        <RefreshView VerticalOptions="FillAndExpand">
+        <RefreshView IsRefreshing="{Binding IsRefreshing}"
+                     Command="{Binding RefreshCommand}"
+                     RefreshColor="Gainsboro">
             <VerticalStackLayout Spacing="15">
 
                 <!-- Информационная панель -->
@@ -53,7 +55,20 @@
                         </VerticalStackLayout>
                     </Border>
                 </HorizontalStackLayout>
-
+                <!-- Кнопка выхода -->
+                <Border Stroke="DimGray"
+                        BackgroundColor="#474b4e"
+                        Padding="10"
+                        Margin="0,5,0,0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="7.5"/>
+                    </Border.StrokeShape>
+                    <Button Text="Выйти из аккаунта"
+                            Command="{Binding LogoutCommand}"
+                            BackgroundColor="Transparent"
+                            TextColor="#ff6b6b"
+                            FontSize="14"/>
+                </Border>
                 <!-- Панель друзей -->
                 <VerticalStackLayout 
                     x:Name="friendPanel" 

@@ -86,7 +86,7 @@ public partial class RegisterViewModel : ObservableObject
                 // Сбрасываем ошибку перед переходом
                 HasError = false;
                 ErrorMessage = string.Empty;
-                await Shell.Current.GoToAsync("//main/profile");
+                await Shell.Current.GoToAsync("//main");
             }
             else
             {

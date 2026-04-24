@@ -49,7 +49,7 @@ public partial class LoginViewModel : ObservableObject
             var success = await _apiService.LoginAsync(Username, Password);
             if (success)
             {
-                await Shell.Current.GoToAsync("//profile");
+                await Shell.Current.GoToAsync("//main");
             }
             else
             {
@@ -57,9 +57,9 @@ public partial class LoginViewModel : ObservableObject
                 HasError = true;
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            ErrorMessage = "Ошибка подключения к серверу";
+            ErrorMessage = $"Ошибка: {ex.Message}";
             HasError = true;
         }
         finally

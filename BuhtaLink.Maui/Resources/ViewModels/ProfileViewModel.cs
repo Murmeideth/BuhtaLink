@@ -30,6 +30,21 @@ public partial class ProfileViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<WallPostData> _wallPosts = new();
 
+    [RelayCommand]
+    private async Task LogoutAsync()
+    {
+        bool confirm = await Shell.Current.DisplayAlertAsync(
+            "Выход",
+            "Вы уверены, что хотите выйти из аккаунта?",
+            "Выйти",
+            "Отмена");
+
+        if (confirm)
+        {
+            await _apiService.LogoutAsync();
+        }
+    }
+
     public ProfileViewModel(IRestApiService apiService)
     {
         _apiService = apiService;
@@ -42,10 +57,9 @@ public partial class ProfileViewModel : ObservableObject
 
     private async Task LoadDataAsync()
     {
-        // Сначала пробуем загрузить из SecureStorage (мгновенно)
-        UserNickname = await SecureStorage.GetAsync("user_nickname") ?? "Пользователь";
-        UserFullName = await SecureStorage.GetAsync("user_fullname") ?? "";
-        UserAvatar = await SecureStorage.GetAsync("user_avatar") ?? "personalplaceholder.jpg";
+        UserNickname = Preferences.Get("user_nickname", "Пользователь");
+        UserFullName = Preferences.Get("user_fullname", "");
+        UserAvatar = Preferences.Get("user_avatar", "personalplaceholder.jpg");
 
         // Затем обновляем с сервера
         await RefreshDataAsync();

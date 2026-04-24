@@ -48,24 +48,30 @@ public class RestApiService : IRestApiService
             var loginData = new { username, password };
             var response = await _httpClient.PostAsJsonAsync("/api/Auth/login", loginData, _jsonOptions);
 
+            var responseBody = await response.Content.ReadAsStringAsync();
+
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<LoginResponse>(_jsonOptions);
-                SetAuthToken(result.Token);
-                await SecureStorage.SetAsync("jwt_token", result.Token);
+                var result = JsonSerializer.Deserialize<LoginResponse>(responseBody, _jsonOptions);
+                if (result?.Token == null) return false;
 
-                await SecureStorage.SetAsync("user_id", result.User.Id.ToString());
-                await SecureStorage.SetAsync("user_nickname", result.User.Nickname ?? result.User.Username);
-                await SecureStorage.SetAsync("user_fullname", result.User.FullName ?? "");
-                await SecureStorage.SetAsync("user_avatar", result.User.AvatarUrl ?? "personalplaceholder.jpg");
+                SetAuthToken(result.Token);
+
+                // Временно Preferences вместо SecureStorage
+                Preferences.Set("jwt_token", result.Token);
+                Preferences.Set("user_id", result.User.Id.ToString());
+                Preferences.Set("user_nickname", result.User.Nickname ?? result.User.Username);
+                Preferences.Set("user_fullname", result.User.FullName ?? "");
+                Preferences.Set("user_avatar", result.User.AvatarUrl ?? "personalplaceholder.jpg");
 
                 return true;
             }
-            return false;
+
+            throw new Exception($"[{response.StatusCode}] {responseBody}");
         }
-        catch
+        catch (Exception ex)
         {
-            return false;
+            throw new Exception($"Ошибка запроса: {ex.Message}", ex);
         }
     }
 
@@ -97,7 +103,7 @@ public class RestApiService : IRestApiService
         }
     }
 
-    // ===== ТРИ НОВЫХ МЕТОДА =====
+    
     public async Task<UserProfileDto> GetProfileAsync()
     {
         return await GetAsync<UserProfileDto>("/api/Profile");
@@ -112,7 +118,19 @@ public class RestApiService : IRestApiService
     {
         return await GetAsync<List<PostDto>>($"/api/Profile/posts?skip={skip}&take={take}");
     }
-    // =============================
+
+    public async Task LogoutAsync()
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = null;
+
+        Preferences.Remove("jwt_token");
+        Preferences.Remove("user_id");
+        Preferences.Remove("user_nickname");
+        Preferences.Remove("user_fullname");
+        Preferences.Remove("user_avatar");
+
+        await Shell.Current.GoToAsync("//login");
+    }
 
     private class LoginResponse
     {

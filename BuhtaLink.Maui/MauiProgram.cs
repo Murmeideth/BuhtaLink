@@ -22,16 +22,20 @@ public static class MauiProgram
 
         // HttpClient для API
         #if ANDROID
-                var baseUrl = "http://10.0.2.2:5082"; 
-        #elif WINDOWS
+                var baseUrl = "http://10.0.2.2:5082";
+#elif WINDOWS
                 var baseUrl = "http://localhost:5082"; 
-        #else
+#else
                 var baseUrl = "http://localhost:5082"; 
-        #endif
+#endif
 
-        builder.Services.AddHttpClient<IRestApiService, RestApiService>(client =>
+        builder.Services.AddSingleton<IRestApiService, RestApiService>(sp =>
         {
-            client.BaseAddress = new Uri(baseUrl);
+            var httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(baseUrl);
+            httpClient.Timeout = TimeSpan.FromSeconds(30);
+
+            return new RestApiService(httpClient);
         });
 
         // ViewModel

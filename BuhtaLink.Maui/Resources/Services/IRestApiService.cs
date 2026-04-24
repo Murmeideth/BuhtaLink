@@ -6,6 +6,7 @@ public interface IRestApiService
     Task<T> PostAsync<T>(string endpoint, object data);
     Task<bool> LoginAsync(string username, string password);
     Task<bool> RegisterAsync(string username, string password, string fullName, string nickname);
+    Task LogoutAsync();
 
     // Профиль
     Task<UserProfileDto> GetProfileAsync();
